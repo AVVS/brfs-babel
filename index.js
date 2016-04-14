@@ -11,7 +11,7 @@ function babelBrfs (filename, opts) {
   var iterator;
   for (var i = 0, l = ignore.length; i < l; i++) {
     iterator = ignore[i];
-    if (ignore === iterator || ignore === '.' + iterator) {
+    if (ext === iterator || ext === '.' + iterator) {
       return through();
     }
   }
