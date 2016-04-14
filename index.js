@@ -1,10 +1,20 @@
 var babel = require('babel-core');
 var through = require('through2');
 var staticFs = require('babel-plugin-static-fs');
+var path = require('path');
+var ignoreDefaults = ['json'];
 
 module.exports = babelBrfs;
 function babelBrfs (filename, opts) {
-  if (/\.json$/i.test(filename)) return through();
+  var ext = path.extname(filename);
+  var ignore = opts && opts.ignore || ignoreDefaults;
+  var iterator;
+  for (var i = 0, l = ignore.length; i < l; i++) {
+    iterator = ignore[i];
+    if (ignore === iterator || ignore === '.' + iterator) {
+      return through();
+    }
+  }
 
   var input = '';
   return through(write, flush);
